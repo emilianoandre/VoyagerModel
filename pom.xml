@@ -17,6 +17,31 @@
 		<artifactId>Builder</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	
+	<dependencies>
+		<dependency>
+            <groupId>com.stormpath.sdk</groupId>
+            <artifactId>stormpath-sdk-api</artifactId>
+            <version>${stormpath.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.stormpath.sdk</groupId>
+            <artifactId>stormpath-sdk-httpclient</artifactId>
+            <version>${stormpath.version}</version>
+            <scope>runtime</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jackson-mapper-asl</artifactId>
+                    <groupId>org.codehaus.jackson</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.stormpath.sdk</groupId>
+            <artifactId>stormpath-sdk-oauth</artifactId>
+            <version>${stormpath.version}</version>
+        </dependency>
+	</dependencies>
 
 	<build>
 		<resources>

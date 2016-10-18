@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import com.voyagerproject.dao.interfaces.IVoyagerDao;
 import com.voyagerproject.exceptions.ResultNotFoundException;
 import com.voyagerproject.model.User;
+import com.voyagerproject.util.ModelUtils;
 
 /**
  * Home object for domain model class User.
@@ -165,7 +166,7 @@ public class UserDAO extends VoyagerDAO implements IVoyagerDao<User> {
 		try {
 			Query query = getEntityManager().createQuery("select u from User u where u.userName = '" + userName + "' and u.password = '" + password + "'");
 			result = (User) query.getSingleResult();
-			result.setLoggedIn(true);
+			result.setToken(ModelUtils.createUserToken(userName));
 			merge(result);
 		} catch (NoResultException nrEx) {
 			String errorMessage = "Incorrect user name or password for User: " + userName;
@@ -191,7 +192,7 @@ public class UserDAO extends VoyagerDAO implements IVoyagerDao<User> {
 		try {
 			Query query = getEntityManager().createQuery("select u from User u where u.userName = '" + userName + "' and u.password = '" + password + "'");
 			result = (User) query.getSingleResult();
-			result.setLoggedIn(false);
+			result.setToken("");
 			merge(result);
 		} catch (NoResultException nrEx) {
 			String errorMessage = "Failed to log out User: " + userName; 

@@ -27,7 +27,7 @@ public class User implements java.io.Serializable {
 	private String email;
 	private String password;
 	private UserType userType;
-	private Boolean loggedIn;
+	private String token;
 	private Date createdOn;
 	private String createdBy;
 
@@ -113,13 +113,13 @@ public class User implements java.io.Serializable {
 		this.userType = userType;
 	}
 	
-	@Column(name = "loggedIn", nullable = false)
-	public Boolean getLoggedIn() {
-		return this.loggedIn;
+	@Column(name = "token", nullable = false)
+	public String getToken() {
+		return this.token;
 	}
 
-	public void setLoggedIn(Boolean loggedIn) {
-		this.loggedIn = loggedIn;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
