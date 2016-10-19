@@ -1,7 +1,11 @@
 package com.voyagerproject.dao;
 // Generated Feb 27, 2016 12:34:42 PM by Hibernate Tools 4.3.1.Final
 
+import java.util.Collection;
+
 import javax.ejb.Stateless;
+import javax.persistence.Query;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -64,6 +68,21 @@ public class RuleManagerTypeDAO extends VoyagerDAO implements IVoyagerDao<RuleMa
 			RuleManagerType instance = getEntityManager().find(RuleManagerType.class, id);
 			log.debug("get successful");
 			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public Collection<RuleManagerType> getList() {
+		log.debug("getting all RuleManagerTypes");
+		try {			
+			Query query = getEntityManager().createQuery("SELECT rmt FROM RuleManagerType rmt");			
+			Collection<RuleManagerType> resultList = (Collection<RuleManagerType>) query.getResultList();
+			log.debug("get successful");
+			return resultList;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
 			throw re;

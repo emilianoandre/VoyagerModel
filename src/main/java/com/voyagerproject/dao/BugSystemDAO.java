@@ -1,7 +1,11 @@
 package com.voyagerproject.dao;
 // Generated Feb 27, 2016 12:34:42 PM by Hibernate Tools 4.3.1.Final
 
+import java.util.Collection;
+
 import javax.ejb.Stateless;
+import javax.persistence.Query;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -64,6 +68,21 @@ public class BugSystemDAO extends VoyagerDAO implements IVoyagerDao<BugSystem> {
 			BugSystem instance = getEntityManager().find(BugSystem.class, id);
 			log.debug("get successful");
 			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public Collection<BugSystem> getList() {
+		log.debug("getting all BugSystems");
+		try {			
+			Query query = getEntityManager().createQuery("SELECT bs FROM BugSystem bs");			
+			Collection<BugSystem> resultList = (Collection<BugSystem>) query.getResultList();
+			log.debug("get successful");
+			return resultList;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
 			throw re;

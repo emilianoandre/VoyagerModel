@@ -4,6 +4,8 @@
  */
 package com.voyagerproject.dao.interfaces;
 
+import java.util.Collection;
+
 public interface IVoyagerDao<T> {
 	
 	/**
@@ -35,5 +37,13 @@ public interface IVoyagerDao<T> {
 	 * @return instance
 	 */
 	public T findById(int id);
+	
+	/**
+	 * Returns the complete list of entities
+	 * 
+	 * 
+	 * @return instance
+	 */
+	public Collection<T> getList();
 
 }

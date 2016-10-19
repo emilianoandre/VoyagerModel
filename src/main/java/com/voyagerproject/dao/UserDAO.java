@@ -1,6 +1,8 @@
 package com.voyagerproject.dao;
 // Generated Feb 27, 2016 12:34:42 PM by Hibernate Tools 4.3.1.Final
 
+import java.util.Collection;
+
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -69,6 +71,21 @@ public class UserDAO extends VoyagerDAO implements IVoyagerDao<User> {
 			User instance = getEntityManager().find(User.class, id);
 			log.debug("get successful");
 			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public Collection<User> getList() {
+		log.debug("getting all Users");
+		try {			
+			Query query = getEntityManager().createQuery("SELECT u FROM User u");			
+			Collection<User> resultList = (Collection<User>) query.getResultList();
+			log.debug("get successful");
+			return resultList;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
 			throw re;

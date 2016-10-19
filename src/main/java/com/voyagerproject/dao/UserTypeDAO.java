@@ -1,7 +1,11 @@
 package com.voyagerproject.dao;
 // Generated Feb 28, 2016 12:50:47 PM by Hibernate Tools 4.3.1.Final
 
+import java.util.Collection;
+
 import javax.ejb.Stateless;
+import javax.persistence.Query;
+
 import org.apache.log4j.Logger;
 
 import com.voyagerproject.dao.interfaces.IVoyagerDao;
@@ -67,5 +71,20 @@ public class UserTypeDAO extends VoyagerDAO implements IVoyagerDao<UserType>{
 			log.error("get failed", re);
 			throw re;
 		}
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public Collection<UserType> getList() {
+		log.debug("getting all UserTypes");
+		try {			
+			Query query = getEntityManager().createQuery("SELECT ut FROM UserType ut");			
+			Collection<UserType> resultList = (Collection<UserType>) query.getResultList();
+			log.debug("get successful");
+			return resultList;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}		
 	}
 }
