@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 import com.voyagerproject.dao.interfaces.IVoyagerDao;
+import com.voyagerproject.exceptions.ResultNotFoundException;
 import com.voyagerproject.model.UserType;
 
 /**
@@ -21,13 +22,14 @@ public class UserTypeDAO extends VoyagerDAO implements IVoyagerDao<UserType>{
 
 	private static final Logger log = Logger.getLogger(UserTypeDAO.class);
 	
-	public void persist(UserType transientInstance) {
+	public Integer persist(UserType transientInstance) {
 		log.debug("persisting UserType instance");
 		try {
 			getEntityManager().getTransaction().begin();
 			getEntityManager().persist(transientInstance);
 			getEntityManager().getTransaction().commit();
 			log.debug("persist successful");
+			return transientInstance.getIdUserType();
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
 			throw re;
@@ -61,13 +63,17 @@ public class UserTypeDAO extends VoyagerDAO implements IVoyagerDao<UserType>{
 		}
 	}
 
-	public UserType findById(int id) {
+	public UserType findById(int id) throws ResultNotFoundException {
 		log.debug("getting UserType instance with id: " + id);
 		try {
 			UserType instance = getEntityManager().find(UserType.class, id);
+			if (instance == null) {
+				log.debug("UserType: " + id + " not found");
+				throw new ResultNotFoundException("UserType: " + id + " not found");
+			}
 			log.debug("get successful");
 			return instance;
-		} catch (RuntimeException re) {
+		}  catch (RuntimeException re) {
 			log.error("get failed", re);
 			throw re;
 		}

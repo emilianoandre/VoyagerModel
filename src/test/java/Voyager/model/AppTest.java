@@ -1,6 +1,7 @@
 package Voyager.model;
 
 import com.voyagerproject.dao.UserDAO;
+import com.voyagerproject.exceptions.ResultNotFoundException;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -36,6 +37,10 @@ public class AppTest
     public void testApp()
     {
         UserDAO userDao = new UserDAO();
-        assertNotNull(userDao.findById(5));
+        try {
+			assertNotNull(userDao.findById(5));
+		} catch (ResultNotFoundException e) {
+			assertNotNull(null);
+		}
     }
 }

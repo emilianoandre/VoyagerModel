@@ -25,13 +25,14 @@ public class UserDAO extends VoyagerDAO implements IVoyagerDao<User> {
 
 	private static final Log log = LogFactory.getLog(UserDAO.class);
 
-	public void persist(User transientInstance) {
+	public Integer persist(User transientInstance) {
 		log.debug("persisting User instance");
 		try {
 			getEntityManager().getTransaction().begin();
 			getEntityManager().persist(transientInstance);
 			getEntityManager().getTransaction().commit();
 			log.debug("persist successful");
+			return transientInstance.getIdUser();
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
 			throw re;
@@ -65,10 +66,14 @@ public class UserDAO extends VoyagerDAO implements IVoyagerDao<User> {
 		}
 	}
 
-	public User findById(int id) {
+	public User findById(int id) throws ResultNotFoundException {
 		log.debug("getting User instance with id: " + id);
 		try {
 			User instance = getEntityManager().find(User.class, id);
+			if (instance == null) {
+				log.debug("User: " + id + " not found");
+				throw new ResultNotFoundException("User: " + id + " not found");
+			}
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

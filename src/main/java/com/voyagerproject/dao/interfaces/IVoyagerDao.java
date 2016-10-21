@@ -6,6 +6,8 @@ package com.voyagerproject.dao.interfaces;
 
 import java.util.Collection;
 
+import com.voyagerproject.exceptions.ResultNotFoundException;
+
 public interface IVoyagerDao<T> {
 	
 	/**
@@ -13,7 +15,7 @@ public interface IVoyagerDao<T> {
 	 * 
 	 * @param transientInstance
 	 */
-	public void persist(T transientInstance);
+	public Integer persist(T transientInstance);
 	
 	/**
 	 * Removes the instance from the DB
@@ -36,7 +38,7 @@ public interface IVoyagerDao<T> {
 	 * @param id
 	 * @return instance
 	 */
-	public T findById(int id);
+	public T findById(int id) throws ResultNotFoundException;
 	
 	/**
 	 * Returns the complete list of entities

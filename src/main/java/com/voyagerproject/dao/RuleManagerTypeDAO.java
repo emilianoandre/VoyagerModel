@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.voyagerproject.dao.interfaces.IVoyagerDao;
+import com.voyagerproject.exceptions.ResultNotFoundException;
 import com.voyagerproject.model.RuleManagerType;
 
 /**
@@ -22,13 +23,14 @@ public class RuleManagerTypeDAO extends VoyagerDAO implements IVoyagerDao<RuleMa
 
 	private static final Log log = LogFactory.getLog(RuleManagerTypeDAO.class);
 
-	public void persist(RuleManagerType transientInstance) {
+	public Integer persist(RuleManagerType transientInstance) {
 		log.debug("persisting RuleManagerType instance");
 		try {
 			getEntityManager().getTransaction().begin();
 			getEntityManager().persist(transientInstance);
 			getEntityManager().getTransaction().commit();
 			log.debug("persist successful");
+			return transientInstance.getIdRuleManagerType();
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
 			throw re;
@@ -62,10 +64,14 @@ public class RuleManagerTypeDAO extends VoyagerDAO implements IVoyagerDao<RuleMa
 		}
 	}
 
-	public RuleManagerType findById(int id) {
+	public RuleManagerType findById(int id) throws ResultNotFoundException {
 		log.debug("getting RuleManagerType instance with id: " + id);
 		try {
 			RuleManagerType instance = getEntityManager().find(RuleManagerType.class, id);
+			if (instance == null) {
+				log.debug("RuleManagerType: " + id + " not found");
+				throw new ResultNotFoundException("RuleManagerType: " + id + " not found");
+			}
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

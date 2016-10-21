@@ -23,22 +23,19 @@ public class UserType implements java.io.Serializable {
 	private int idUserType;
 	private String name;
 	private Date createdOn;
-	private String createdBy;
 
 	public UserType() {
 	}
 
-	public UserType(int idUserType, String name, Date createdOn, String createdBy) {
+	public UserType(int idUserType, String name, Date createdOn) {
 		this.idUserType = idUserType;
 		this.name = name;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 	
-	public UserType(String name, Date createdOn, String createdBy) {
+	public UserType(String name, Date createdOn) {
 		this.name = name;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 
 	@Id
@@ -69,15 +66,6 @@ public class UserType implements java.io.Serializable {
 
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
-	}
-
-	@Column(name = "createdBy", nullable = false, length = 100)
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
 	}
 
 }

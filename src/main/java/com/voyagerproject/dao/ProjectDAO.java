@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.voyagerproject.dao.interfaces.IVoyagerDao;
+import com.voyagerproject.exceptions.ResultNotFoundException;
 import com.voyagerproject.model.Project;
 
 /**
@@ -22,13 +23,14 @@ public class ProjectDAO extends VoyagerDAO implements IVoyagerDao<Project> {
 
 	private static final Log log = LogFactory.getLog(ProjectDAO.class);
 
-	public void persist(Project transientInstance) {
+	public Integer persist(Project transientInstance) {
 		log.debug("persisting Project instance");
 		try {
 			getEntityManager().getTransaction().begin();
 			getEntityManager().persist(transientInstance);
 			getEntityManager().getTransaction().commit();
 			log.debug("persist successful");
+			return transientInstance.getIdProject();
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
 			throw re;
@@ -62,10 +64,14 @@ public class ProjectDAO extends VoyagerDAO implements IVoyagerDao<Project> {
 		}
 	}
 
-	public Project findById(int id) {
+	public Project findById(int id) throws ResultNotFoundException {
 		log.debug("getting Project instance with id: " + id);
 		try {
 			Project instance = getEntityManager().find(Project.class, id);
+			if (instance == null) {
+				log.debug("Project: " + id + " not found");
+				throw new ResultNotFoundException("Project: " + id + " not found");
+			}
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

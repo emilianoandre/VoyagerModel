@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.voyagerproject.dao.interfaces.IVoyagerDao;
+import com.voyagerproject.exceptions.ResultNotFoundException;
 import com.voyagerproject.model.BugSystemType;
 
 /**
@@ -22,13 +23,14 @@ public class BugSystemTypeDAO extends VoyagerDAO implements IVoyagerDao<BugSyste
 
 	private static final Log log = LogFactory.getLog(BugSystemTypeDAO.class);
 
-	public void persist(BugSystemType transientInstance) {
+	public Integer persist(BugSystemType transientInstance) {
 		log.debug("persisting BugSystemType instance");
 		try {
 			getEntityManager().getTransaction().begin();
 			getEntityManager().persist(transientInstance);
 			getEntityManager().getTransaction().commit();
 			log.debug("persist successful");
+			return transientInstance.getIdBugSystemType();
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
 			throw re;
@@ -62,10 +64,14 @@ public class BugSystemTypeDAO extends VoyagerDAO implements IVoyagerDao<BugSyste
 		}
 	}
 
-	public BugSystemType findById(int id) {
+	public BugSystemType findById(int id) throws ResultNotFoundException {
 		log.debug("getting BugSystemType instance with id: " + id);
 		try {
 			BugSystemType instance = getEntityManager().find(BugSystemType.class, id);
+			if (instance == null) {
+				log.debug("BugSystemType: " + id + " not found");
+				throw new ResultNotFoundException("BugSystemType: " + id + " not found");
+			}
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

@@ -19,7 +19,7 @@ public class MainTestClass
     public static void main( String[] args )
     {
     	initEntityManager();
-        UserType userType = new UserType("admin", null, "eandre");
+        UserType userType = new UserType("admin", null);
         UserTypeDAO userTypeDAO = new UserTypeDAO();
         userTypeDAO.persist(userType);
         

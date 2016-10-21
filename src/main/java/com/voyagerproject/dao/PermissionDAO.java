@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.voyagerproject.dao.interfaces.IVoyagerDao;
+import com.voyagerproject.exceptions.ResultNotFoundException;
 import com.voyagerproject.model.Permission;
 
 /**
@@ -22,13 +23,14 @@ public class PermissionDAO extends VoyagerDAO implements IVoyagerDao<Permission>
 
 	private static final Log log = LogFactory.getLog(PermissionDAO.class);
 
-	public void persist(Permission transientInstance) {
+	public Integer persist(Permission transientInstance) {
 		log.debug("persisting Permission instance");
 		try {
 			getEntityManager().getTransaction().begin();
 			getEntityManager().persist(transientInstance);
 			getEntityManager().getTransaction().commit();
 			log.debug("persist successful");
+			return transientInstance.getIdPermission();
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
 			throw re;
@@ -62,10 +64,14 @@ public class PermissionDAO extends VoyagerDAO implements IVoyagerDao<Permission>
 		}
 	}
 
-	public Permission findById(int id) {
+	public Permission findById(int id) throws ResultNotFoundException {
 		log.debug("getting Permission instance with id: " + id);
 		try {
 			Permission instance = getEntityManager().find(Permission.class, id);
+			if (instance == null) {
+				log.debug("Permission: " + id + " not found");
+				throw new ResultNotFoundException("Permission: " + id + " not found");
+			}
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {
