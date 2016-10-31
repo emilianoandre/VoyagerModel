@@ -29,13 +29,11 @@ public class User implements java.io.Serializable {
 	private UserType userType;
 	private String token;
 	private Date createdOn;
-	private String createdBy;
 
 	public User() {
 	}
 
-	public User(int idUser, String userName, String name, String email, String password, UserType userType, Date createdOn,
-			String createdBy) {
+	public User(int idUser, String userName, String name, String email, String password, UserType userType, Date createdOn) {
 		this.idUser = idUser;
 		this.userName = userName;
 		this.name = name;
@@ -43,17 +41,15 @@ public class User implements java.io.Serializable {
 		this.password = password;
 		this.userType = userType;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 	
-	public User(String userName, String name, String email, String password, UserType userType, Date createdOn,	String createdBy) {
+	public User(String userName, String name, String email, String password, UserType userType, Date createdOn) {
 		this.userName = userName;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.userType = userType;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 
 	@Id
@@ -131,14 +127,4 @@ public class User implements java.io.Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-
-	@Column(name = "createdBy", nullable = false, length = 100)
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
 }
