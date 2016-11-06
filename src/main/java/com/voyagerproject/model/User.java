@@ -109,7 +109,7 @@ public class User implements java.io.Serializable {
 		this.userType = userType;
 	}
 	
-	@Column(name = "token", nullable = false)
+	@Column(name = "token")
 	public String getToken() {
 		return this.token;
 	}
