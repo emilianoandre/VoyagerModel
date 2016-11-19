@@ -22,22 +22,19 @@ public class Permission implements java.io.Serializable {
 	private int idPermission;
 	private String name;
 	private Date createdOn;
-	private String createdBy;
 
 	public Permission() {
 	}
 
-	public Permission(int idPermission, String name, Date createdOn, String createdBy) {
+	public Permission(int idPermission, String name, Date createdOn) {
 		this.idPermission = idPermission;
 		this.name = name;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 	
-	public Permission(String name, Date createdOn, String createdBy) {
+	public Permission(String name, Date createdOn) {
 		this.name = name;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 
 	@Id
@@ -69,14 +66,4 @@ public class Permission implements java.io.Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-
-	@Column(name = "createdBy", nullable = false, length = 100)
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
 }

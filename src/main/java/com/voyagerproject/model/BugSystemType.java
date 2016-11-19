@@ -16,48 +16,43 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "bugsystemtype", catalog = "Voyager")
-public class BugSystemType implements java.io.Serializable {
+public class BugSystemType extends Type implements java.io.Serializable {
 
 	private static final long serialVersionUID = 2908259411074500774L;
-	private int idBugSystemType;
-	private String name;
 	private Date createdOn;
-	private String createdBy;
 
 	public BugSystemType() {
 	}
 
-	public BugSystemType(int idBugSystemType, String name, Date createdOn, String createdBy) {
-		this.idBugSystemType = idBugSystemType;
-		this.name = name;
+	public BugSystemType(int id, String name, Date createdOn) {
+		this.setId(id);
+		this.setName(name);
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 	
-	public BugSystemType(String name, Date createdOn, String createdBy) {
-		this.name = name;
+	public BugSystemType(String name, Date createdOn) {
+		this.setName(name);
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "idBugSystemType", unique = true, nullable = false)
 	public int getIdBugSystemType() {
-		return this.idBugSystemType;
+		return this.getId();
 	}
 
-	public void setIdBugSystemType(int idBugSystemType) {
-		this.idBugSystemType = idBugSystemType;
+	public void setIdBugSystemType(int id) {
+		this.setId(id);;
 	}
 
 	@Column(name = "name", nullable = false, length = 45)
 	public String getName() {
-		return this.name;
+		return super.getName();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		super.setName(name);
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -68,15 +63,6 @@ public class BugSystemType implements java.io.Serializable {
 
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
-	}
-
-	@Column(name = "createdBy", nullable = false, length = 100)
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
 	}
 
 }

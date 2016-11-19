@@ -1,9 +1,13 @@
 package com.voyagerproject.util;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import org.apache.commons.lang3.time.DateUtils;
+
+import com.voyagerproject.model.Type;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -32,6 +36,22 @@ public class ModelUtils {
 				.compact();
 
 		return jwt;
+	}
+	
+	/**
+	 * Converts a list of a specific type to a generic type
+	 * 
+	 * @param list a list of objects belonging to a subclass of Type
+	 * @return
+	 */
+	public static Collection<Type> getGenericTypeList(Collection<?> list) {
+		Collection<Type> types = new ArrayList<Type>();
+		for (Object type : list) {
+			types.add((Type) type);
+		}
+		
+		return types;
+		
 	}
 
 }

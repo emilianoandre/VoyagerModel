@@ -17,24 +17,22 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "usertype", catalog = "Voyager")
-public class UserType implements java.io.Serializable {
+public class UserType extends Type implements java.io.Serializable {
 
 	private static final long serialVersionUID = 8879097156881624765L;
-	private int idUserType;
-	private String name;
 	private Date createdOn;
 
 	public UserType() {
 	}
 
-	public UserType(int idUserType, String name, Date createdOn) {
-		this.idUserType = idUserType;
-		this.name = name;
+	public UserType(int id, String name, Date createdOn) {
+		this.setId(id);
+		this.setName(name);;
 		this.createdOn = createdOn;
 	}
 	
 	public UserType(String name, Date createdOn) {
-		this.name = name;
+		this.setName(name);;
 		this.createdOn = createdOn;
 	}
 
@@ -42,20 +40,20 @@ public class UserType implements java.io.Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "idUserType", unique = true, nullable = false)
 	public int getIdUserType() {
-		return this.idUserType;
+		return this.getId();
 	}
 
-	public void setIdUserType(int idUserType) {
-		this.idUserType = idUserType;
+	public void setIdUserType(int id) {
+		this.setId(id);
 	}
 
 	@Column(name = "name", nullable = false, length = 45)
 	public String getName() {
-		return this.name;
+		return super.getName();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		super.setName(name);
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

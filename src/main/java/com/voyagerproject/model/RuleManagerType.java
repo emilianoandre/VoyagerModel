@@ -16,48 +16,43 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "rulemanagertype", catalog = "Voyager")
-public class RuleManagerType implements java.io.Serializable {
+public class RuleManagerType extends Type implements java.io.Serializable {
 
 	private static final long serialVersionUID = -377773422443526541L;
-	private int idRuleManagerType;
-	private String name;
 	private Date createdOn;
-	private String createdBy;
 
 	public RuleManagerType() {
 	}
 
-	public RuleManagerType(int idRuleManagerType, String name, Date createdOn, String createdBy) {
-		this.idRuleManagerType = idRuleManagerType;
-		this.name = name;
+	public RuleManagerType(int id, String name, Date createdOn) {
+		this.setId(id);
+		this.setName(name);
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 	
-	public RuleManagerType(String name, Date createdOn, String createdBy) {
-		this.name = name;
+	public RuleManagerType(String name, Date createdOn) {
+		this.setName(name);
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "idRuleManagerType", unique = true, nullable = false)
 	public int getIdRuleManagerType() {
-		return this.idRuleManagerType;
+		return this.getId();
 	}
 
-	public void setIdRuleManagerType(int idRuleManagerType) {
-		this.idRuleManagerType = idRuleManagerType;
+	public void setIdRuleManagerType(int id) {
+		this.setId(id);
 	}
 
 	@Column(name = "name", nullable = false, length = 45)
 	public String getName() {
-		return this.name;
+		return super.getName();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		super.setName(name);
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -68,15 +63,6 @@ public class RuleManagerType implements java.io.Serializable {
 
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
-	}
-
-	@Column(name = "createdBy", nullable = false, length = 100)
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
 	}
 
 }
