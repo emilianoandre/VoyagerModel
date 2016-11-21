@@ -26,28 +26,23 @@ public class RuleManager implements java.io.Serializable {
 	private String url;
 	private RuleManagerType ruleManagerType;
 	private Date createdOn;
-	private String createdBy;
 
 	public RuleManager() {
 	}
 
-	public RuleManager(int idRuleManager, String name, String url, RuleManagerType ruleManagerType, Date createdOn,
-			String createdBy) {
+	public RuleManager(int idRuleManager, String name, String url, RuleManagerType ruleManagerType, Date createdOn) {
 		this.idRuleManager = idRuleManager;
 		this.name = name;
 		this.url = url;
 		this.ruleManagerType = ruleManagerType;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 	
-	public RuleManager(String name, String url, RuleManagerType ruleManagerType, Date createdOn,
-			String createdBy) {
+	public RuleManager(String name, String url, RuleManagerType ruleManagerType, Date createdOn) {
 		this.name = name;
 		this.url = url;
 		this.ruleManagerType = ruleManagerType;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 
 	@Id
@@ -98,14 +93,4 @@ public class RuleManager implements java.io.Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-
-	@Column(name = "createdBy", nullable = false, length = 100)
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
 }

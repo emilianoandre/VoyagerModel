@@ -24,36 +24,25 @@ public class Project implements java.io.Serializable {
 	private int idProject;
 	private String name;
 	private BugSystem bugSystem;
-	private Integer ruleManager;
+	private RuleManager ruleManager;
 	private Date createdOn;
-	private String createdBy;
 
 	public Project() {
 	}
-
-	public Project(int idProject, String name, BugSystem bugSystem, Date createdOn, String createdBy) {
-		this.idProject = idProject;
-		this.name = name;
-		this.bugSystem = bugSystem;
-		this.createdOn = createdOn;
-		this.createdBy = createdBy;
-	}
-
-	public Project(int idProject, String name, BugSystem bugSystem, Integer ruleManager, Date createdOn, String createdBy) {
+	
+	public Project(int idProject, String name, BugSystem bugSystem, RuleManager ruleManager, Date createdOn) {
 		this.idProject = idProject;
 		this.name = name;
 		this.bugSystem = bugSystem;
 		this.ruleManager = ruleManager;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 	
-	public Project(String name, BugSystem bugSystem, Integer ruleManager, Date createdOn, String createdBy) {
+	public Project(String name, BugSystem bugSystem, RuleManager ruleManager, Date createdOn) {
 		this.name = name;
 		this.bugSystem = bugSystem;
 		this.ruleManager = ruleManager;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 
 	@Id
@@ -86,12 +75,13 @@ public class Project implements java.io.Serializable {
 		this.bugSystem = bugSystem;
 	}
 
-	@Column(name = "ruleManager")
-	public Integer getRuleManager() {
+	@OneToOne
+    @JoinColumn(name = "ruleManager")
+	public RuleManager getRuleManager() {
 		return this.ruleManager;
 	}
 
-	public void setRuleManager(Integer ruleManager) {
+	public void setRuleManager(RuleManager ruleManager) {
 		this.ruleManager = ruleManager;
 	}
 
@@ -104,14 +94,4 @@ public class Project implements java.io.Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-
-	@Column(name = "createdBy", nullable = false, length = 100)
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
 }

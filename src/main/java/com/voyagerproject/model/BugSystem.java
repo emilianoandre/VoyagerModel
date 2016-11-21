@@ -26,26 +26,23 @@ public class BugSystem implements java.io.Serializable {
 	private String url;
 	private BugSystemType bugSystemType;
 	private Date createdOn;
-	private String createdBy;
 
 	public BugSystem() {
 	}
 
-	public BugSystem(int idBugSystem, String name, String url, BugSystemType bugSystemType, Date createdOn, String createdBy) {
+	public BugSystem(int idBugSystem, String name, String url, BugSystemType bugSystemType, Date createdOn) {
 		this.idBugSystem = idBugSystem;
 		this.name = name;
 		this.url = url;
 		this.bugSystemType = bugSystemType;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 	
-	public BugSystem(String name, String url, BugSystemType bugSystemType, Date createdOn, String createdBy) {
+	public BugSystem(String name, String url, BugSystemType bugSystemType, Date createdOn) {
 		this.name = name;
 		this.url = url;
 		this.bugSystemType = bugSystemType;
 		this.createdOn = createdOn;
-		this.createdBy = createdBy;
 	}
 
 	@Id
@@ -96,14 +93,4 @@ public class BugSystem implements java.io.Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-
-	@Column(name = "createdBy", nullable = false, length = 100)
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
 }
