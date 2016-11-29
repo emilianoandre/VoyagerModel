@@ -204,24 +204,23 @@ public class UserDAO extends VoyagerDAO implements IVoyagerDao<User> {
 	/**
 	 * Logs out a user by setting oggedIn column to false
 	 * 
-	 * @param userName
-	 * @param password
-	 * @return logged in user
+	 * @param token
+	 * @return logged out user
 	 */
-	public User logOut(String userName, String password) throws ResultNotFoundException, Exception{
-		log.debug("Logging in User: " + userName);
+	public User logOut(String token) throws ResultNotFoundException, Exception{
+		log.debug("Logging out User with token:" + token);
 		User result = null;
 		try {
-			Query query = getEntityManager().createQuery("select u from User u where u.userName = '" + userName + "' and u.password = '" + password + "'");
+			Query query = getEntityManager().createQuery("select u from User u where u.token = '" + token + "'");
 			result = (User) query.getSingleResult();
 			result.setToken("");
 			merge(result);
 		} catch (NoResultException nrEx) {
-			String errorMessage = "Failed to log out User: " + userName; 
+			String errorMessage = "Failed to log out User with token: " + token; 
 			log.debug(errorMessage);
 			throw new ResultNotFoundException(errorMessage);
 		} catch (Exception ex) {
-			log.debug("Failed to log out User: " + userName);
+			log.debug("Failed to log out User with token: " + token);
 			throw ex;
 		}
 		return result;
